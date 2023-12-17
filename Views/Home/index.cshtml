@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple HTML Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        header {
+            background-color: #040a63;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        section {
+            margin: 20px 0;
+        }
+
+        footer {
+            background-color: #040a63;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Simple HTML Template</h1>
+    </header>
+
+    <section>
+        <h2>Welcome to my website!</h2>
+        <p>This is a simple HTML template.</p>
+    </section>
+
+    <section>
+        <h2>Features</h2>
+        <ul>
+            <li>Responsive design</li>
+            <li>Basic styling</li>
+            <li>Easy to customize</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 My Website</p>
+    </footer>
+
+    <script>
+        console.log("Hello")
+        async function hello() 
+        {
+            const response = await fetch("http://localhost:5041/api/hello");
+            const data = await response.json();
+            console.log(data);
+        }
+        
+        async function goodbye()
+        {
+            const goodbye = await fetch("http://localhost:5041/api/goodbye");
+            const data = await goodbye.json();
+            console.log(data);
+        }
+
+        hello();
+        goodbye();
+    </script>
+</body>
+</html>
