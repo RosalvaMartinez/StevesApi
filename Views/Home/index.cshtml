@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <title>Simple HTML Template</title>
     <style>
         body {
@@ -48,6 +51,10 @@
             <li>Easy to customize</li>
         </ul>
     </section>
+    <button type="button" id="hello">hello</button>
+    <button type="button" id="goodbye">goodbye</button>
+
+    <div id="target"></div>
 
     <footer>
         <p>&copy; 2023 My Website</p>
@@ -60,6 +67,7 @@
             const response = await fetch("http://localhost:5041/api/hello");
             const data = await response.json();
             console.log(data);
+            $("#target").text(data.doors.result)
         }
         
         async function goodbye()
@@ -69,8 +77,10 @@
             console.log(data);
         }
 
-        hello();
-        goodbye();
+        $(document).ready(function() {
+            $("#hello").on("click", hello);
+            $("#goodbye").on("click", goodbye);
+        });
     </script>
 </body>
 </html>
