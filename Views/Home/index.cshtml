@@ -51,8 +51,14 @@
             <li>Easy to customize</li>
         </ul>
     </section>
-    <button type="button" id="hello">hello</button>
-    <button type="button" id="goodbye">goodbye</button>
+    <button type="button" id="product">PRODUCTS</button>
+    <button type="button" id="customer">CUSTOMERS</button>
+    <button type="button" id="order">ORDERS</button>
+    <button type="button" id="supplier">SUPPLIERS</button>
+    <button type="button" id="invoice">INVOICES</button>
+    <button type="button" id="qualitycontrol">QUALITY CONTROL FORMS</button>
+    <button type="button" id="shipping">SHIPPING</button>
+    <button type="button" id="employee">EMPLOYEES</button>
 
     <div id="target"></div>
 
@@ -61,24 +67,74 @@
     </footer>
 
     <script>
-        console.log("Hello")
-        async function hello() 
+        const piAddress = "http://192.168.1.90:5041"
+
+        async function product() 
         {
-            const response = await fetch("http://localhost:5041/api/hello");
+            const response = await fetch( piAddress + "/api/product" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.doors.result)
+            $("#target").text(data.product.result)
+        }
+
+        async function customer() 
+        {
+            const response = await fetch( piAddress + "/api/customer" );
+            const data = await response.json();
+            console.log(data);
+            $("#target").text(data.customer.result)
         }
         
-        async function goodbye()
+        async function order()
         {
-            const goodbye = await fetch("http://localhost:5041/api/goodbye");
-            const data = await goodbye.json();
+            const response = await fetch( piAddress + "/api/order" );
+            const data = await response.json();
             console.log(data);
+            $("#target").text(data.order.result)
+        }
+
+        async function supplier()
+        {
+            const response = await fetch( piAddress + "/api/supplier" );
+            const data = await response.json();
+            console.log(data);
+            $("#target").text(data.supplier.result)
+        }
+
+        async function invoice()
+        {
+            const response = await fetch( piAddress + "/api/invoice" );
+            const data = await respose.json();
+            console.log(data);
+            $("#target").text(data.invoice.result)
+        }
+
+        async function qualitycontrol()
+        {
+            const response = await fetch( piAddress + "/api/qualitycontrol" );
+            const data = await respose.json();
+            console.log(data);
+            $("#target").text(data.qualitycontrol.result)
+        }
+
+        async function shipping()
+        {
+            const response = await fetch( piAddress + "/api/shipping" );
+            const data = await respose.json();
+            console.log(data);
+            $("#target").text(data.shipping.result)
+        }
+
+        async function employee()
+        {
+            const response = await fetch( piAddress + "/api/employee" );
+            const data = await response.json();
+            console.log(data);
+            $("#target").text(data.employee.result)
         }
 
         $(document).ready(function() {
-            $("#hello").on("click", hello);
+            $("#customer").on("click", customer);
             $("#goodbye").on("click", goodbye);
         });
     </script>
