@@ -1,3 +1,4 @@
+using System.Data;
 using MySqlConnector;
 public class DatabaseHandler
 {
@@ -36,25 +37,33 @@ public class DatabaseHandler
 
     }
 
-    public async Task<List<string>> ExecuteQueryAsync(string query)
+    public async Task<DataTable> ExecuteQueryAsync(string query)
     {
-        List<string> resultData = new List<string>();
+        //List<string> resultData = new List<string>();
         await using MySqlConnection connection = new MySqlConnection(ConnectionString);
         await connection.OpenAsync();
         
+        DataTable dataTable = new DataTable();
+
         // Retrieve all rows
         using MySqlCommand command = new MySqlCommand(query, connection);
-        using MySqlDataReader reader = await command.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
+        using (MySqlDataAdapter da = new MySqlDataAdapter(command))
         {
-            // Assuming query returns a single column, change accordingly
-            string columnValue = reader.GetString(0);
-                            
-            // Add the retrieved data to the result list
-            resultData.Add(columnValue);
+            da.Fill(dataTable);
         }
+
+        return dataTable;
+    //     using MySqlDataReader reader = await command.ExecuteReaderAsync();
+    //     while (await reader.ReadAsync())
+    //     {
+    //         // Assuming query returns a single column, change accordingly
+    //         string columnValue = reader.GetString(0);
+                            
+    //         // Add the retrieved data to the result list
+    //         resultData.Add(columnValue);
+    //     }
        
-        await connection.CloseAsync();
-        return resultData;
+    //     await connection.CloseAsync();
+    //     return resultData;
     }
 }
