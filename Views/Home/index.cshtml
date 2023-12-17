@@ -74,7 +74,7 @@
             const response = await fetch( piAddress + "/api/product" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.product.result)
+            $("#target").text(data.products.result)
         }
 
         async function customer() 
@@ -82,7 +82,7 @@
             const response = await fetch( piAddress + "/api/customer" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.customer.result)
+            $("#target").text(data.customers.result)
         }
         
         async function order()
@@ -90,7 +90,7 @@
             const response = await fetch( piAddress + "/api/order" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.order.result)
+            $("#target").text(data.orders.result)
         }
 
         async function supplier()
@@ -98,21 +98,21 @@
             const response = await fetch( piAddress + "/api/supplier" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.supplier.result)
+            $("#target").text(data.suppliers.result)
         }
 
         async function invoice()
         {
             const response = await fetch( piAddress + "/api/invoice" );
-            const data = await respose.json();
+            const data = await response.json();
             console.log(data);
-            $("#target").text(data.invoice.result)
+            $("#target").text(data.invoices.result)
         }
 
         async function qualitycontrol()
         {
             const response = await fetch( piAddress + "/api/qualitycontrol" );
-            const data = await respose.json();
+            const data = await response.json();
             console.log(data);
             $("#target").text(data.qualitycontrol.result)
         }
@@ -120,7 +120,7 @@
         async function shipping()
         {
             const response = await fetch( piAddress + "/api/shipping" );
-            const data = await respose.json();
+            const data = await response.json();
             console.log(data);
             $("#target").text(data.shipping.result)
         }
@@ -130,12 +130,18 @@
             const response = await fetch( piAddress + "/api/employee" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.employee.result)
+            $("#target").text(data.employees.result)
         }
 
         $(document).ready(function() {
+            $("#product").on("click", product);
             $("#customer").on("click", customer);
-            $("#goodbye").on("click", goodbye);
+            $("#order").on("click", order);
+            $("#supplier").on("click", supplier);
+            $("#invoice").on("click", invoice);
+            $("#qualitycontrol").on("click", qualitycontrol);
+            $("#shipping").on("click", shipping);
+            $("#employee").on("click", employee);
         });
     </script>
 </body>
