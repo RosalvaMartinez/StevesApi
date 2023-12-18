@@ -1,31 +1,39 @@
 using System.Data;
-using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 
 
 [ApiController]
 [Route("api")]
-public class HelloController : ControllerBase
+public class StevesApiController : ControllerBase
 {
+    // Credentials passed into DatabaseHandler object to access db
     public DatabaseHandler db = new DatabaseHandler("127.0.0.1", "stevesdoors", "hazel", "whiskey");
     
+
+    // HttpGet endpoint handler runs query that returns data from Product table
     [HttpGet("product")]
+
+    // action method is asynchronous (Task) and will produce an IActionResult upon completion
     public async Task<IActionResult> GetProductAsync()
     {
+        // Use our DatabaseHAndler to execute a SELECT query
         var dt = await db.ExecuteQueryAsync("SELECT * FROM Product");
-        
-         foreach (DataRow row in dt.Rows)
-        {
-            Console.WriteLine($"ProductID: {row["ProductID"]}, ProductName: {row["ProductName"]}");
-        }
+        // Create a response object with the results of the query (DataTable serialized with NewtonSoft)
+        // Newtonsoft package is used to facilitate the conversion between .NET objects and JSON (JavaScript Object Notation) data.
         var response = new { Products = dt };
+        // Send response with query results back to frontend 
         return Ok(response);
     }
 
+    // Endpoint Function runs query that adds data to Product table
+
     [HttpPost("product")]
-    public async Task<IActionResult> AddProductAsync(Product product)
+
+    // handles asynchronous operation: fetches data, then returns an appropriate result 
+    public async Task<IActionResult> AddProductAsync(Product product) //Use the Product class to extract data values in the request to use on line 36
     {
-        Console.WriteLine(product);
+        // Inserts new row into Products table
+        // Use the values of the product value argument and interpolate the values in the query string
         var affectedRows = await db.ExecuteNonQueryAsync($"INSERT INTO Product (ProductName, Description, Material, Size, Color, Price, StockQuantity) VALUES('{product.Productname}', '{product.Description}', '{product.Material}', '{product.Size}', '{product.Color}', {product.Price}, {product.StockQuantity})");
         return Ok(affectedRows);
 
