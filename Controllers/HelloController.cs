@@ -22,6 +22,14 @@ public class HelloController : ControllerBase
         var response = new { Products = dt };
         return Ok(response);
     }
+
+    // [HttpPost("product")]
+    // public async Task<IActionResult> AddProductAsync()
+    // {
+    //     var affectedRows = await db.ExecuteNonQueryAsync("INSERT INTO Product ");
+    //     var response = new { Employees = dt };
+    //     return Ok(response);
+    // }
     
     [HttpGet("customer")]
     public async Task<IActionResult> GetCustomerAsync()

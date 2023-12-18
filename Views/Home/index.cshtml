@@ -51,6 +51,30 @@
             <li>Easy to customize</li>
         </ul>
     </section>
+
+     <h2>Add New Product</h2>
+
+    <form id="addProductForm" action="/api/add-product" method="post">
+        <!-- Product Name -->
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required>
+        <br>
+
+        <!-- Product Price -->
+        <label for="productPrice">Product Price:</label>
+        <input type="number" id="productPrice" name="productPrice" step="0.01" required>
+        <br>
+
+        <!-- Product Description -->
+        <label for="productDescription">Product Description:</label>
+        <textarea id="productDescription" name="productDescription" required></textarea>
+        <br>
+
+        <!-- Submit Button -->
+        <button type="submit">Add Product</button>
+    </form>
+
+
     <button type="button" id="product">PRODUCTS</button>
     <button type="button" id="customer">CUSTOMERS</button>
     <button type="button" id="order">ORDERS</button>
@@ -74,7 +98,7 @@
             const response = await fetch( piAddress + "/api/product" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.products.result)
+            createTable(data.products);
         }
 
         async function customer() 
@@ -82,7 +106,7 @@
             const response = await fetch( piAddress + "/api/customer" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.customers.result)
+            createTable(data.customers);
         }
         
         async function order()
@@ -90,7 +114,7 @@
             const response = await fetch( piAddress + "/api/order" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.orders.result)
+            createTable(data.orders);
         }
 
         async function supplier()
@@ -98,7 +122,7 @@
             const response = await fetch( piAddress + "/api/supplier" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.suppliers.result)
+            createTable(data.suppliers);
         }
 
         async function invoice()
@@ -106,7 +130,7 @@
             const response = await fetch( piAddress + "/api/invoice" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.invoices.result)
+            createTable(data.invoices);
         }
 
         async function qualitycontrol()
@@ -114,7 +138,7 @@
             const response = await fetch( piAddress + "/api/qualitycontrol" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.qualitycontrol.result)
+            createTable(data.qualitycontrol);
         }
 
         async function shipping()
@@ -122,7 +146,7 @@
             const response = await fetch( piAddress + "/api/shipping" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.shipping.result)
+            createTable(data.shipping);
         }
 
         async function employee()
@@ -130,7 +154,31 @@
             const response = await fetch( piAddress + "/api/employee" );
             const data = await response.json();
             console.log(data);
-            $("#target").text(data.employees.result)
+            createTable(data.employees);
+        }
+
+        function createTable(dataArray) 
+        {
+            // Empty table for new data
+            $("#target").empty();
+            // Create the table header
+            var table = $('<table>').addClass('my-table');
+            var headerRow = $('<tr>');
+            Object.keys(dataArray[0]).forEach(function (key) {
+                headerRow.append($('<th>').text(key));
+            });
+            table.append(headerRow);
+
+            // Create the table rows
+            dataArray.forEach(function (row) {
+                var tableRow = $('<tr>');
+                Object.values(row).forEach(function (value) {
+                    tableRow.append($('<td>').text(value));
+                });
+                table.append(tableRow);
+            });
+            $("#target").append(table);
+
         }
 
         $(document).ready(function() {
