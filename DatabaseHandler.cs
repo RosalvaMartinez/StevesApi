@@ -39,7 +39,6 @@ public class DatabaseHandler
 
     public async Task<DataTable> ExecuteQueryAsync(string query)
     {
-        //List<string> resultData = new List<string>();
         await using MySqlConnection connection = new MySqlConnection(ConnectionString);
         await connection.OpenAsync();
         
@@ -53,17 +52,5 @@ public class DatabaseHandler
         }
 
         return dataTable;
-    //     using MySqlDataReader reader = await command.ExecuteReaderAsync();
-    //     while (await reader.ReadAsync())
-    //     {
-    //         // Assuming query returns a single column, change accordingly
-    //         string columnValue = reader.GetString(0);
-                            
-    //         // Add the retrieved data to the result list
-    //         resultData.Add(columnValue);
-    //     }
-       
-    //     await connection.CloseAsync();
-    //     return resultData;
     }
 }

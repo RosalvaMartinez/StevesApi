@@ -13,9 +13,7 @@ public class HelloController : ControllerBase
     public async Task<IActionResult> GetProductAsync()
     {
         var dt = await db.ExecuteQueryAsync("SELECT * FROM Product");
-
-        //var dt =  Task<DataTable>.Run( ()=> { db.ExecuteQueryAsync("SELECT * FROM Product") });
-        //Console.WriteLine(dt);
+        
          foreach (DataRow row in dt.Rows)
         {
             Console.WriteLine($"ProductID: {row["ProductID"]}, ProductName: {row["ProductName"]}");

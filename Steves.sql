@@ -1,12 +1,4 @@
--- CREATE DATABASE stevesdoors;
-
 USE stevesdoors;
-
--- DROP TABLE IF EXISTS `Product`, `Customer`,`Supplier`, `Employee`, `Invoice`, `Order`, `Shipping`, `QualityControl`;
-
-
-
-
 
 DROP TABLE IF EXISTS `Supplier`;
 
