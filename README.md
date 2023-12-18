@@ -11,6 +11,8 @@ This project will address the following:
 4. Any kind of user interface for #1 and #2 -> C# HomeController.cs will serve an `Views/Home/index.cshtml` page that will serve as a user interface
 5. Detail of how the above items were accomplished -> The following report details how this was accomplished
 6. Interaction in C# interacting with SQL Server -> I used the MySqlConnector package to create a DatabaseHandler.cs object to handle this interaction
+
+   A Video Demo of this project can be viewed here: https://drive.google.com/file/d/1e92qR8RJ3itfYFCvYkZl3xxYA-yIMAKF/view?usp=sharing
    
 ## Install mariadb and create a database with tables and data on Raspberrypi
 
