@@ -66,6 +66,9 @@ public class DatabaseHandler
             da.Fill(dataTable);
         }
 
+        // Close the database connection asynchronously
+        await connection.CloseAsync();
+
         // Return the populated DataTable
         return dataTable;
     }
