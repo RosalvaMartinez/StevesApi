@@ -1,3 +1,4 @@
+// Define a class named Product to represent information about a product
 public class Product 
 {
     public int Id { get; set; }

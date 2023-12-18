@@ -37,11 +37,6 @@
     <header>
         <h1>STEVES</h1>
     </header>
-
-    <section>
-        <h2></h2>
-        <p></p>
-    </section>
     
     <button type="button" id="product" style="background-color: #040a63;border: none; color: white;">PRODUCTS</button>
     <button type="button" id="customer" style="background-color: #040a63;border: none; color: white;">CUSTOMERS</button>
@@ -102,13 +97,25 @@
     </footer>
 
     <script>
+        // Define the address of the API server 
+        // The IP address is the current hostname of the raspberry pi 
+        // The PORT is the curent PORT the dotnet web API is listening for requests
+        // Subject to change depoending on the network the raspberrypi is connected to 
+        // Use commant hostname -I in terminal to determine current IP address of pi <3
+        // Change in appsettings.json as well
+        // cry
         const piAddress = "http://192.168.1.90:5041"
 
+        // Function to fetch and display product data from the API
         async function product() 
         {
+            // Send a GET request to the product API endpoint
             const response = await fetch( piAddress + "/api/product" );
+            // Extract JSON data from the response
             const data = await response.json();
+            // Log retrieved data to the console
             console.log(data);
+            // Call a function to create a table based on the product data
             createTable(data.products);
         }
 
@@ -188,11 +195,13 @@
                 });
                 table.append(tableRow);
             });
+            // Insert newly created table into a DIV with an id of target
             $("#target").append(table);
 
         }
 
         $(document).ready(function() {
+            // Add event listeners to buttons so that they run a request function on click
             $("#product").on("click", product);
             $("#customer").on("click", customer);
             $("#order").on("click", order);
@@ -202,8 +211,11 @@
             $("#shipping").on("click", shipping);
             $("#employee").on("click", employee);
 
+            // Add an event listener to the form submit button
             $("#productform").submit( async function(event){
+                // Prevent default form submit behavior
                 event.preventDefault();
+                // Create form data object and populate with form input values
                 var formData = { 
                     productname : $("#productname").val(),
                     description : $("#description").val(),
@@ -214,6 +226,7 @@
                     stockquantity : $("#stockquantity").val()
                 }
 
+                // Make a POST request to web API wiith the form data in the request body
                 const response = await fetch ( piAddress + "/api/product", {
                     method : "POST", 
                     headers : {
@@ -222,6 +235,7 @@
                     body : JSON.stringify(formData)
                 })
                 
+                // Console log how many rows were affected IF successful 
                 const data = await response.json();
                 console.log(data);
             })
