@@ -4,6 +4,14 @@ The goal of the project is create a full-stack application using a raspberry pi 
 that will send requests to the WebApi to make queries to a mariadb SQL database that is also hosted on the raspberry pi, and sends the results of those queries 
 back to the user interface where they can be rendered and viewed as tables by the user.
 
+This project will address the following:
+1. Use of Raspberry Pi to communicate some action/activity to the end user -> raspberrypi will host a C# WebApi to communicate data from a mysql database to a user and vice versa
+2. Employment of C# code to control the Raspberry Pi -> raspberrypi will use C# WebApi to serve a front-end to the user, which will make http requests to a C# Api Controller to handle those requests
+3. Use of data in #1 and #2 -> raspberrypi C# WebApi will communicate with a mariadb SQL database to make queries (SELECT and INSERT) and return data to the front-end
+4. Any kind of user interface for #1 and #2 -> C# HomeController.cs will serve an `Views/Home/index.cshtml` page that will serve as a user interface
+5. Detail of how the above items were accomplished -> The following report details how this was accomplished
+6. Interaction in C# interacting with SQL Server -> I used the MySqlConnector package to create a DatabaseHandler.cs object to handle this interaction
+   
 ## Install mariadb and create a database with tables and data on Raspberrypi
 
 First install mariadb on the raspberry pi using: ``` sudo apt install mariadb-server ``` , login to the mariadb and run ``` CREATE DATABASE stevesdoors ```. 
@@ -17,7 +25,7 @@ Next, install the .NET framework from Microsoft onto the raspberry pi. I followe
 Then use ``` dotnet new web -n StevesApi ``` command to create a new dotnet webapi project on the
 raspberry pi. 
 
-##Install MySqlConnector and Newtonsoft packages
+## Install MySqlConnector and Newtonsoft packages
 In order to speed up the development process, install the MySqlConnecter dotnet package:
 ``` dotnet add package MySqlConnector ```
 to connect the C# WebApi to a mariaDB database that was created on the Pi. This package will also help us make SQL queries.
@@ -123,7 +131,7 @@ There is also an HttpPost endpoint that will handle Post requests with data to i
 ## Create HomeController to serve the user interface
 The `HomeController.cs` serves a simple `index.cshtml` page that will serve as a front-end that a user can utilize to make requests for data from the 
 dotnet webapi. It contains several buttons that are connected to functions that will make asynchronous calls to the dotnet webapi using the built-in 
-javascript `fetch` function, and jQuery to render the data from the webapi response into a <table> then update the UI with that newly generated table.
+javascript `fetch` function, and jQuery to render the data from the webapi response into an html `<table>` then update the UI with that newly generated table.
 
 The front-end also has a form that will take the data in that form, put it in a request object, and make a post request to the HttpPost endpoint method 
 which is setup to make an INSERT SQL statement to create a new row in the `Product` table in the database.
@@ -140,3 +148,47 @@ The buttons on that user interface are programmed to make asynchronous requests 
 the database. The WebApi uses a mariadb connection to make queries to a mariadb database hosted on the Raspberry pi, and return the results back to the 
 client in an http response. The client will then use jQuery to render the data in the response into an html table. The UI has a form that will submit data 
 to the HttpPost endpoint in the WebApi using an Http post request. The endpoint will use the mariadb connection to insert that data into a table in the mariadb database. 
+
+## Trouble shooting and General project setup
+
+This project was setup on my home network with the raspberrypi. The pi network connection for my home local network was configured when the OS was first 
+installed on the MicroSD card, I can foresee some network issues when attempting to connect the pi to a different network in order to demo this project. 
+The pi was setup without a GUI, and with an ssh connection to remotely connect, configure, and develop the project on the raspberrypi. Communication with the
+pi may be difficult since the way I connect to is using ssh over a local network, without a prior connection, it won't be possible to use wifi and ssh to connect
+to the pi since it is not already connected to the network.
+
+It may be possible to connect to the pi using another laptop and an ethernet cable to establish a wired connection. Then configure the new network wifi settings on the pi.
+
+### SSH into raspberripi
+```
+ssh hazel@raspberrypi.local (raspberrypi.local maps to 192.168.1.90 on my home network)
+```
+
+### Get Raspberrypi IP Address
+```
+hostname -I
+```
+
+### Change hardcoded network address strings
+There are several places where the IP address of the pi (192.168.1.90) on my home network is hardcoded. Connecting the pi to a new local network may change this
+IP address, in that case there is a need to change the hardcoded IP address in several places:
+``` Views/Home/index.cshtml```
+In the javascript section, change the following line:
+```
+const piAddress = "http://192.168.1.90:5041"
+```
+Change `192.168.1.90` to the new IP address of the pi after connecting to the new network to the IP address that comes up when typing ``` hostname -I ``` into the raspberryi
+terminal. Change `5041` to the Port that is shown after running ``` dotnet run ```
+
+Then look inside of ``` appsettings.json ``` and change the line `http://0.0.0.0:5041` to have the port that is shown after running ``` dotnet run ``` (if it changes)
+```
+"Kestrel": {
+    "Endpoints": {
+      "Http": {
+        "Url": "http://0.0.0.0:5041" <----Change this port to whatever port dotnet run uses!
+      }
+    }
+```
+
+
+
