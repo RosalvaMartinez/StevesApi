@@ -1,4 +1,5 @@
 using System.Data;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -23,13 +24,14 @@ public class HelloController : ControllerBase
         return Ok(response);
     }
 
-    // [HttpPost("product")]
-    // public async Task<IActionResult> AddProductAsync()
-    // {
-    //     var affectedRows = await db.ExecuteNonQueryAsync("INSERT INTO Product ");
-    //     var response = new { Employees = dt };
-    //     return Ok(response);
-    // }
+    [HttpPost("product")]
+    public async Task<IActionResult> AddProductAsync(Product product)
+    {
+        Console.WriteLine(product);
+        var affectedRows = await db.ExecuteNonQueryAsync($"INSERT INTO Product (ProductName, Description, Material, Size, Color, Price, StockQuantity) VALUES('{product.Productname}', '{product.Description}', '{product.Material}', '{product.Size}', '{product.Color}', {product.Price}, {product.StockQuantity})");
+        return Ok(affectedRows);
+
+    }
     
     [HttpGet("customer")]
     public async Task<IActionResult> GetCustomerAsync()
