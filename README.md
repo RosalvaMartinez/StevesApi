@@ -190,5 +190,8 @@ Then look inside of ``` appsettings.json ``` and change the line `http://0.0.0.0
     }
 ```
 
+### Naviagate a web browser to the IP address and Port of the raspberrypi to get the front-end UI
+In a web browser, type in the IP address of the raspberry pi and the port that dotnet is running on into the address bar in the browser to get the UI
+on my home network this would be `192.168.1.90:5041` Use `hostname -I` to get the IP address and `dotnet run` to get the port
 
 
